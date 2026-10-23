@@ -45,39 +45,43 @@ export const MentorsView: React.FC<MentorsViewProps> = ({ onOpenMessages }) => {
   const peers = store.users.filter((u) => u.id !== store.currentUser.id && u.role === 'member');
 
   return (
-    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen bg-white bg-grid-pattern py-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto space-y-8 relative">
         {/* Header */}
-        <div className="max-w-3xl space-y-2">
-          <div className="text-xs font-semibold uppercase tracking-wider text-emerald-800">
+        <div className="max-w-3xl space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider text-rose-700 bg-rose-50 border border-rose-200/70 shadow-2xs">
+            <Users className="w-3.5 h-3.5 text-rose-600" />
             Human Connections
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight font-display">
             Mentors & Like-Minded Peers
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
             Discovery thrives with authentic feedback. Connect with verified practitioners who review your artifacts, or study alongside peers sharing similar learning goals.
           </p>
         </div>
 
         {/* Tab switch: Mentors vs Peers */}
-        <div className="flex border-b border-slate-200 gap-6 text-xs font-semibold">
+        <div className="flex border-b border-zinc-200/80 gap-8 text-xs font-semibold">
           <button
             onClick={() => setActiveTab('experts')}
-            className={`py-2.5 border-b-2 transition-colors ${
+            className={`py-3 border-b-2 transition-all cursor-pointer ${
               activeTab === 'experts'
-                ? 'border-slate-900 text-slate-900 font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-zinc-950 text-zinc-950 font-bold'
+                : 'border-transparent text-zinc-500 hover:text-zinc-800'
             }`}
           >
             Verified Experts & Mentors ({experts.length})
           </button>
           <button
             onClick={() => setActiveTab('peers')}
-            className={`py-2.5 border-b-2 transition-colors ${
+            className={`py-3 border-b-2 transition-all cursor-pointer ${
               activeTab === 'peers'
-                ? 'border-slate-900 text-slate-900 font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-zinc-950 text-zinc-950 font-bold'
+                : 'border-transparent text-zinc-500 hover:text-zinc-800'
             }`}
           >
             Study Partners & Peers ({peers.length})
@@ -86,47 +90,48 @@ export const MentorsView: React.FC<MentorsViewProps> = ({ onOpenMessages }) => {
 
         {/* Search */}
         <div className="relative max-w-md">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name, expertise, or sport/creative domain..."
-            className="w-full text-xs pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-emerald-500 shadow-2xs"
+            className="w-full text-xs pl-10 pr-4 py-2.5 bg-white border border-zinc-200/90 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-300 shadow-2xs transition-all text-zinc-900"
           />
         </div>
 
         {/* Experts List */}
         {activeTab === 'experts' && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredExperts.map((exp) => (
               <div
                 key={exp.userId}
-                className="bg-white rounded-xl border border-slate-200 shadow-2xs hover:shadow-xs p-6 flex flex-col justify-between space-y-4"
+                className="bg-white rounded-2xl border border-zinc-200/90 shadow-2xs hover:shadow-lg hover:border-zinc-300 transition-all p-6 sm:p-7 flex flex-col justify-between space-y-4 card-hover-lift"
               >
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
+                <div className="space-y-3.5">
+                  <div className="flex items-start gap-3.5">
                     <img
                       src={exp.avatar}
                       alt={exp.name}
-                      className="w-12 h-12 rounded-full object-cover border border-slate-200 shrink-0"
+                      className="w-13 h-13 rounded-full object-cover border-2 border-zinc-100 shadow-xs shrink-0"
                     />
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
-                        <h3 className="font-bold text-slate-900 text-sm truncate">{exp.name}</h3>
+                        <h3 className="font-bold text-zinc-950 text-sm truncate">{exp.name}</h3>
                         {exp.verified && (
                           <span
                             title="Credentials verified by Skill Path governance"
-                            className="text-[10px] text-emerald-700 font-semibold flex items-center gap-0.5 shrink-0"
+                            className="text-[10px] text-rose-700 bg-rose-50 border border-rose-200/60 px-1.5 py-0.2 rounded-full font-semibold flex items-center gap-0.5 shrink-0"
                           >
-                            <ShieldCheck className="w-3.5 h-3.5" />
+                            <ShieldCheck className="w-3 h-3 text-rose-600" />
+                            Verified
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-slate-500 line-clamp-1">{exp.headline}</div>
-                      <div className="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
-                        <span className="capitalize text-emerald-800 font-medium">
-                          Availability: {exp.availability}
+                      <div className="text-[11px] text-zinc-500 line-clamp-1 mt-0.5">{exp.headline}</div>
+                      <div className="flex items-center gap-2 mt-1.5 text-[10px] text-zinc-400">
+                        <span className="capitalize text-zinc-700 font-medium">
+                          {exp.availability}
                         </span>
                         <span>·</span>
                         <span>{exp.languages.join(', ')}</span>
@@ -134,38 +139,37 @@ export const MentorsView: React.FC<MentorsViewProps> = ({ onOpenMessages }) => {
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">{exp.bio}</p>
+                  <p className="text-xs text-zinc-600 line-clamp-3 leading-relaxed">{exp.bio}</p>
 
                   <div className="space-y-1">
-                    <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                    <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">
                       Verified Expertise
                     </div>
                     <div className="flex flex-wrap gap-1 text-[11px]">
                       {exp.areasOfExpertise.map((area, i) => (
-                        <span key={i} className="text-slate-700 font-medium">
+                        <span key={i} className="text-zinc-800 font-medium bg-zinc-50 border border-zinc-200/60 px-2 py-0.5 rounded-md text-[10px]">
                           {area}
-                          {i < exp.areasOfExpertise.length - 1 ? ' · ' : ''}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-slate-50 text-[11px] text-slate-600 border border-slate-100">
-                    <span className="font-semibold text-slate-800">Qualifications: </span>
+                  <div className="p-3 rounded-xl bg-zinc-50 text-[11px] text-zinc-600 border border-zinc-200/70">
+                    <span className="font-semibold text-zinc-900">Qualifications: </span>
                     {exp.qualifications}
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] text-slate-400 font-mono">
+                <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
+                  <span className="text-[11px] text-zinc-400 font-mono">
                     {exp.menteesCount} active mentees
                   </span>
                   <button
                     onClick={() => setSelectedExpertForRequest(exp)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-xs transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-zinc-950 hover:bg-zinc-850 rounded-xl shadow-xs hover:shadow-rose-950/20 transition-all hover:-translate-y-0.5"
                   >
                     <span>Request Mentorship</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3 h-3 text-rose-400" />
                   </button>
                 </div>
               </div>
@@ -175,37 +179,37 @@ export const MentorsView: React.FC<MentorsViewProps> = ({ onOpenMessages }) => {
 
         {/* Peers List */}
         {activeTab === 'peers' && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {peers.map((peer) => (
               <div
                 key={peer.id}
-                className="bg-white rounded-xl border border-slate-200 shadow-2xs p-5 flex flex-col justify-between space-y-4"
+                className="bg-white rounded-2xl border border-zinc-200/90 shadow-2xs hover:shadow-lg hover:border-zinc-300 transition-all p-6 flex flex-col justify-between space-y-4 card-hover-lift"
               >
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <img
                       src={peer.avatar}
                       alt={peer.name}
-                      className="w-10 h-10 rounded-full object-cover border border-slate-200"
+                      className="w-11 h-11 rounded-full object-cover border border-zinc-200"
                     />
                     <div>
-                      <h3 className="font-bold text-slate-900 text-xs">{peer.name}</h3>
-                      <div className="text-[10px] text-slate-500 capitalize">
+                      <h3 className="font-bold text-zinc-950 text-xs">{peer.name}</h3>
+                      <div className="text-[10px] text-zinc-500 capitalize">
                         {peer.lifeStage.replace('_', ' ')}
                       </div>
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">{peer.bio}</p>
+                  <p className="text-xs text-zinc-600 line-clamp-3 leading-relaxed">{peer.bio}</p>
 
-                  <div className="text-[11px] text-slate-500">
-                    <span className="font-semibold text-slate-700">Interests: </span>
+                  <div className="text-[11px] text-zinc-500">
+                    <span className="font-semibold text-zinc-800">Interests: </span>
                     {peer.interestsPrimary.join(' · ')}
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] text-slate-400 font-mono">
+                <div className="pt-3 border-t border-zinc-100 flex items-center justify-between">
+                  <span className="text-[11px] text-zinc-400 font-mono">
                     {peer.availableHoursPerWeek} hrs/wk
                   </span>
                   <button
@@ -216,7 +220,7 @@ export const MentorsView: React.FC<MentorsViewProps> = ({ onOpenMessages }) => {
                         'peer'
                       )
                     }
-                    className="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
+                    className="px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:text-zinc-950 bg-zinc-100 hover:bg-zinc-200 rounded-xl transition-colors"
                   >
                     Connect as Peer
                   </button>

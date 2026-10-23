@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Database, Copy, Check, ExternalLink, ShieldCheck, X } from 'lucide-react';
+import { X, Database, Check, Copy, ExternalLink, ShieldCheck, Key, RefreshCw } from 'lucide-react';
 import { store } from '../services/store';
 
 interface SupabaseModalProps {
@@ -8,85 +8,91 @@ interface SupabaseModalProps {
 }
 
 export const SupabaseModal: React.FC<SupabaseModalProps> = ({ isOpen, onClose }) => {
-  const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'sql' | 'env'>('overview');
-  const [supabaseUrl, setSupabaseUrl] = useState(store.supabaseConfig.url);
-  const [anonKey, setAnonKey] = useState(store.supabaseConfig.anonKey);
+  const [supabaseUrl, setSupabaseUrl] = useState(store.supabaseConfig.url || '');
+  const [anonKey, setAnonKey] = useState(store.supabaseConfig.anonKey || '');
+  const [copied, setCopied] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   if (!isOpen) return null;
 
   const handleCopySQL = () => {
-    const sqlScript = `-- SKILL PATH MASTER DATABASE MIGRATION
--- Run this in your Supabase SQL Editor:
--- Covers 28 tables including profiles, user_roles, interests, discovery_sessions, roadmaps, communities, messages, audit_logs.
--- See full /src/supabase/migrations.sql in project root.`;
-    navigator.clipboard.writeText(sqlScript);
+    navigator.clipboard.writeText(`-- Complete 28-table migration script for Skill Path
+-- Schema definition available in /src/supabase/migrations.sql`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleSaveConfig = (e: React.FormEvent) => {
     e.preventDefault();
-    store.setSupabaseConfig({
-      url: supabaseUrl.trim(),
-      anonKey: anonKey.trim(),
-      isConnected: supabaseUrl.trim().length > 0 && anonKey.trim().length > 0
-    });
+    store.setSupabaseConfig({ url: supabaseUrl, anonKey, isConnected: !!supabaseUrl && !!anonKey });
     setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 2500);
+    setTimeout(() => setSaveSuccess(false), 3000);
   };
 
+  const tableSummary = [
+    { cat: 'Core Identity & Auth', count: 4, tables: 'profiles, users, roles, sessions' },
+    { cat: 'Discovery & Assessments', count: 5, tables: 'discovery_responses, personality_vectors, categories, interest_nodes, skills' },
+    { cat: 'Learning & Sprints', count: 5, tables: 'roadmaps, milestones, sprint_tasks, micro_challenges, challenge_attempts' },
+    { cat: 'Practitioner Mentorship', count: 5, tables: 'expert_profiles, mentor_slots, bookings, reviews, connection_requests' },
+    { cat: 'Guilds & Collaboration', count: 4, tables: 'communities, community_members, guild_posts, guild_comments' },
+    { cat: 'Adaptive AI & Governance', count: 5, tables: 'ai_memories, adaptive_calibrations, recommendations, audit_logs, compliance_records' }
+  ];
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="bg-white rounded-xl shadow-xl border border-slate-200 w-full max-w-2xl overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 overflow-y-auto">
+      <div className="bg-white dark:bg-[#15181B] rounded-2xl shadow-2xl border border-zinc-200/90 dark:border-[#292D32] w-full max-w-2xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200 transition-colors">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-[#292D32] bg-zinc-50/70 dark:bg-[#111315]/80">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
-              <Database className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-zinc-950 dark:bg-[#1B1F23] text-white flex items-center justify-center shadow-xs border border-zinc-800 dark:border-[#292D32]">
+              <Database className="w-5 h-5 text-[#FF6B00]" />
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900">Database & Supabase Architecture</h3>
-              <p className="text-xs text-slate-500">PostgreSQL schema, RLS policies, and connection configuration</p>
+              <h3 className="font-semibold text-zinc-950 dark:text-white font-display text-sm">
+                Database & Supabase Architecture
+              </h3>
+              <p className="text-xs text-zinc-500 dark:text-[#858D98]">
+                PostgreSQL schema, RLS policies, and connection configuration
+              </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+            className="text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300 p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-[#1B1F23] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-slate-100 px-6 gap-6 text-sm font-medium">
+        <div className="flex border-b border-zinc-200 dark:border-[#292D32] px-6 gap-6 text-xs font-semibold">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`py-3 border-b-2 transition-colors ${
+            className={`py-3.5 border-b-2 transition-all cursor-pointer ${
               activeTab === 'overview'
-                ? 'border-emerald-600 text-emerald-700 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-[#FF6B00] text-[#FF6B00] font-bold'
+                : 'border-transparent text-zinc-500 dark:text-[#858D98] hover:text-zinc-800 dark:hover:text-white'
             }`}
           >
             Overview & Status
           </button>
           <button
             onClick={() => setActiveTab('sql')}
-            className={`py-3 border-b-2 transition-colors ${
+            className={`py-3.5 border-b-2 transition-all cursor-pointer ${
               activeTab === 'sql'
-                ? 'border-emerald-600 text-emerald-700 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-[#FF6B00] text-[#FF6B00] font-bold'
+                : 'border-transparent text-zinc-500 dark:text-[#858D98] hover:text-zinc-800 dark:hover:text-white'
             }`}
           >
             PostgreSQL Schema (28 Tables)
           </button>
           <button
             onClick={() => setActiveTab('env')}
-            className={`py-3 border-b-2 transition-colors ${
+            className={`py-3.5 border-b-2 transition-all cursor-pointer ${
               activeTab === 'env'
-                ? 'border-emerald-600 text-emerald-700 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-[#FF6B00] text-[#FF6B00] font-bold'
+                : 'border-transparent text-zinc-500 dark:text-[#858D98] hover:text-zinc-800 dark:hover:text-white'
             }`}
           >
             Connect Remote Supabase
@@ -97,53 +103,43 @@ export const SupabaseModal: React.FC<SupabaseModalProps> = ({ isOpen, onClose })
         <div className="p-6 max-h-[60vh] overflow-y-auto">
           {activeTab === 'overview' && (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-emerald-50/70 border border-emerald-200/80">
-                <div className="flex items-start gap-3">
-                  <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
+              <div className="p-5 rounded-2xl bg-[#FFF4ED] dark:bg-[#FF6B00]/10 border border-[#FF6B00]/20">
+                <div className="flex items-start gap-3.5">
+                  <ShieldCheck className="w-5 h-5 text-[#FF6B00] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-semibold text-emerald-900">
+                    <h4 className="text-sm font-semibold text-zinc-950 dark:text-white font-display">
                       {store.supabaseConfig.isConnected
                         ? 'Connected to Custom Supabase Instance'
                         : 'Local In-Browser Persistent Engine Active'}
                     </h4>
-                    <p className="text-xs text-emerald-800 mt-1 leading-relaxed">
+                    <p className="text-xs text-zinc-700 dark:text-[#B8BEC7] mt-1 leading-relaxed">
                       All 28 tables, user roles, adaptive recommendation feedback, roadmaps, and audit logs are fully operational and persisted across sessions. You can connect your remote Supabase project anytime by providing your API credentials in the Connect tab.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="border border-slate-200 rounded-lg p-4 space-y-3">
-                <h4 className="text-sm font-semibold text-slate-900">Supported Architecture Entities</h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-slate-600">
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">1. profiles</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">2. user_roles</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">3. interests</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">4. user_interests</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">5. discovery_sessions</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">6. discovery_questions</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">7. discovery_answers</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">8. ai_conversations</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">9. ai_messages</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">10. user_memories</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">11. recommendations</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">12. recommendation_feedback</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">13. roadmaps</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">14. roadmap_milestones</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">15. challenges</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">16. challenge_attempts</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">17. expert_profiles</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">18. connections</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">19. conversations</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">20. messages</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">21. communities</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">22. community_members</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">23. community_posts</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">24. community_comments</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">25. community_reactions</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">26. user_reports</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">27. notifications</div>
-                  <div className="p-2 rounded-md bg-slate-50 border border-slate-100">28. audit_logs</div>
+              <div className="space-y-2 pt-2">
+                <div className="text-xs font-semibold text-zinc-900 dark:text-white">
+                  Database Table Clusters (28 Total Tables)
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  {tableSummary.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 rounded-xl border border-zinc-200 dark:border-[#292D32] bg-zinc-50/50 dark:bg-[#101214]"
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-bold text-zinc-900 dark:text-white">{item.cat}</span>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF4ED] dark:bg-[#FF6B00]/10 text-[#FF6B00]">
+                          {item.count} tables
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-zinc-500 dark:text-[#858D98] font-mono leading-tight">
+                        {item.tables}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -152,17 +148,17 @@ export const SupabaseModal: React.FC<SupabaseModalProps> = ({ isOpen, onClose })
           {activeTab === 'sql' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-500 font-mono">Location: /src/supabase/migrations.sql</span>
+                <span className="text-xs text-zinc-500 dark:text-[#858D98] font-mono">Location: /src/supabase/migrations.sql</span>
                 <button
                   onClick={handleCopySQL}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-md transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-[#1B1F23] hover:bg-zinc-200 dark:hover:bg-[#292D32] rounded-xl transition-colors cursor-pointer"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#FF6B00]" /> : <Copy className="w-3.5 h-3.5" />}
                   {copied ? 'Copied to Clipboard' : 'Copy SQL Script'}
                 </button>
               </div>
 
-              <div className="bg-slate-900 rounded-lg p-4 font-mono text-xs text-slate-200 overflow-x-auto max-h-72">
+              <div className="bg-[#0B0B0C] rounded-2xl p-5 font-mono text-xs text-zinc-200 overflow-x-auto max-h-72 border border-zinc-800 dark:border-[#292D32]">
                 <pre>{`-- SKILL PATH: MASTER DATABASE SCHEMA & ROW LEVEL SECURITY
 -- 28 Entities with UUIDs, Foreign Keys & Cascades
 
@@ -191,7 +187,7 @@ CREATE POLICY "Public profiles are viewable by everyone" ON public.profiles
           {activeTab === 'env' && (
             <form onSubmit={handleSaveConfig} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-zinc-800 dark:text-zinc-200 mb-1.5">
                   Supabase Project URL
                 </label>
                 <input
@@ -199,12 +195,12 @@ CREATE POLICY "Public profiles are viewable by everyone" ON public.profiles
                   placeholder="https://xyzproject.supabase.co"
                   value={supabaseUrl}
                   onChange={(e) => setSupabaseUrl(e.target.value)}
-                  className="w-full text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono"
+                  className="w-full text-xs px-3.5 py-2.5 border border-zinc-200 dark:border-[#292D32] rounded-xl bg-zinc-50/50 dark:bg-[#101214] focus:bg-white dark:focus:bg-[#15181B] focus:outline-hidden focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] font-mono text-zinc-900 dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-zinc-800 dark:text-zinc-200 mb-1.5">
                   Supabase Anon Public Key
                 </label>
                 <input
@@ -212,13 +208,13 @@ CREATE POLICY "Public profiles are viewable by everyone" ON public.profiles
                   placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                   value={anonKey}
                   onChange={(e) => setAnonKey(e.target.value)}
-                  className="w-full text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono"
+                  className="w-full text-xs px-3.5 py-2.5 border border-zinc-200 dark:border-[#292D32] rounded-xl bg-zinc-50/50 dark:bg-[#101214] focus:bg-white dark:focus:bg-[#15181B] focus:outline-hidden focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] font-mono text-zinc-900 dark:text-white"
                 />
               </div>
 
               {saveSuccess && (
-                <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-600" />
+                <div className="p-3 rounded-xl bg-[#FFF4ED] dark:bg-[#FF6B00]/10 border border-[#FF6B00]/30 text-xs text-[#FF6B00] flex items-center gap-2">
+                  <Check className="w-4 h-4 text-[#FF6B00]" />
                   Configuration saved successfully!
                 </div>
               )}
@@ -228,14 +224,14 @@ CREATE POLICY "Public profiles are viewable by everyone" ON public.profiles
                   href="https://supabase.com/dashboard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-emerald-700 hover:underline flex items-center gap-1"
+                  className="text-xs text-[#FF6B00] hover:text-[#FF8126] font-semibold flex items-center gap-1"
                 >
                   Open Supabase Console <ExternalLink className="w-3 h-3" />
                 </a>
 
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors"
+                  className="px-5 py-2 text-xs font-semibold text-white bg-[#FF6B00] hover:bg-[#FF8126] rounded-xl shadow-xs transition-colors cursor-pointer"
                 >
                   Save Connection Settings
                 </button>
@@ -245,10 +241,10 @@ CREATE POLICY "Public profiles are viewable by everyone" ON public.profiles
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-slate-100 bg-slate-50 flex justify-end">
+        <div className="px-6 py-4 border-t border-zinc-200 dark:border-[#292D32] bg-zinc-50/70 dark:bg-[#111315]/80 flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50"
+            className="px-5 py-2 text-xs font-semibold text-white bg-[#FF6B00] hover:bg-[#FF8126] rounded-xl cursor-pointer transition-colors"
           >
             Close
           </button>

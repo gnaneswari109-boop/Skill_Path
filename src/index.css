@@ -1,10 +1,132 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
+  :root {
+    color-scheme: light;
+    --color-bg-primary: #FFFFFF;
+    --color-bg-secondary: #F8F9FA;
+    --color-bg-card: #FFFFFF;
+    --color-bg-card-elevated: #F3F4F6;
+    --color-text-primary: #111315;
+    --color-text-secondary: #4B5563;
+    --color-text-muted: #9CA3AF;
+    --color-border: #E5E7EB;
+    --color-input: #F9FAFB;
+    --color-accent: #FF6B00;
+    --color-accent-hover: #FF8126;
+    --color-accent-subtle: rgba(255, 107, 0, 0.08);
+  }
+
+  .dark {
+    color-scheme: dark;
+    --color-bg-primary: #0B0B0C;
+    --color-bg-secondary: #111315;
+    --color-bg-card: #15181B;
+    --color-bg-card-elevated: #1B1F23;
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #B8BEC7;
+    --color-text-muted: #858D98;
+    --color-border: #292D32;
+    --color-input: #101214;
+    --color-accent: #FF6B00;
+    --color-accent-hover: #FF8126;
+    --color-accent-subtle: rgba(255, 107, 0, 0.12);
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    color: #0f172a;
-    background-color: #f8fafc;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-primary);
     -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Custom Skill Path Theme Utility Classes */
+.bg-theme-main {
+  background-color: var(--color-bg-primary);
+}
+.bg-theme-secondary {
+  background-color: var(--color-bg-secondary);
+}
+.bg-theme-card {
+  background-color: var(--color-bg-card);
+}
+.bg-theme-card-elevated {
+  background-color: var(--color-bg-card-elevated);
+}
+.bg-theme-input {
+  background-color: var(--color-input);
+}
+.border-theme {
+  border-color: var(--color-border);
+}
+.text-theme-primary {
+  color: var(--color-text-primary);
+}
+.text-theme-secondary {
+  color: var(--color-text-secondary);
+}
+.text-theme-muted {
+  color: var(--color-text-muted);
+}
+.text-theme-accent {
+  color: var(--color-accent);
+}
+.bg-theme-accent {
+  background-color: var(--color-accent);
+}
+.hover\:bg-theme-accent-hover:hover {
+  background-color: var(--color-accent-hover);
+}
+.bg-theme-accent-subtle {
+  background-color: var(--color-accent-subtle);
+}
+
+/* Subtle background grid pattern for light and dark */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(133, 141, 152, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(133, 141, 152, 0.07) 1px, transparent 1px);
+}
+
+/* Orange Glow Effect */
+.orange-glow-subtle {
+  background: radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.12), transparent 70%);
+}
+
+.orange-radial-hero {
+  background: radial-gradient(circle at 50% 20%, rgba(255, 107, 0, 0.15) 0%, rgba(255, 107, 0, 0.03) 50%, transparent 80%);
+}
+
+/* Smooth card transitions */
+.card-hover-lift {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+.card-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(133, 141, 152, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 0, 0.4);
 }

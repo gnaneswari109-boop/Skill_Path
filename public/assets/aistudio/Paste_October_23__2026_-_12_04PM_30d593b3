@@ -1,0 +1,1248 @@
+# MASTER BUILD PROMPT: SKILL PATH
+## AI-Powered Interest Discovery, Human Connections & Personal Growth Platform
+
+### 1. YOUR ROLE
+
+Act as a senior full-stack engineer, AI product architect, UX/UI designer, database architect, and QA engineer.
+
+Build **Skill Path**, a complete, responsive, production-oriented web application that helps people discover their genuine interests, understand their strengths, explore new possibilities, connect with like-minded people and experts, and turn their interests into actionable personal growth plans.
+
+Do not create only a landing page, UI mockup, or static prototype. Build a functional application with real authentication, persistent data, working features, secure permissions, and clear setup instructions.
+
+Use the available Bolt environment to implement, run, test, and debug the application. Work in small, verifiable stages, and prioritize a complete core experience over a large collection of unfinished features.
+
+---
+
+### 2. CORE VISION
+
+Skill Path is built around one central question:
+
+**"What genuinely interests me, what could I do with that interest, and how can I take my next step?"**
+
+Many people do not know their strongest interests or what they want to pursue. They may enjoy cricket, gaming, music, art, technology, teaching, writing, fitness, or solving problems, but they do not know what those interests mean for their future.
+
+Traditional career guidance often asks people to select a career before they understand themselves.
+
+Skill Path must reverse that process:
+
+1. Understand the person.
+2. Discover and validate their interests.
+3. Help them explore possibilities.
+4. Give them clarity about suitable next steps.
+5. Connect them with people who can help.
+6. Provide activities, challenges, and experiences to test their interests.
+7. Learn from feedback and refine recommendations over time.
+
+The platform must support both career-related and non-career-related interests. Not every hobby must become a profession.
+
+The primary success metric is not the number of recommendations shown. It is whether users leave with **greater clarity about their interests and at least one meaningful next action**.
+
+---
+
+### 3. TECHNOLOGY STACK
+
+Use the following stack unless a genuine technical limitation requires a documented alternative.
+
+- Frontend: React, TypeScript, and Vite.
+- Styling: Tailwind CSS with reusable, accessible UI components.
+- Backend: Supabase.
+- Database: Supabase PostgreSQL.
+- Authentication: Supabase Auth with email/password and Google OAuth.
+- Server-side operations: Supabase Edge Functions.
+- AI: An LLM API accessed only through a secure server-side function.
+- Forms and validation: React Hook Form and Zod, or equivalent reliable libraries.
+- Routing: React Router.
+- Icons: Lucide React.
+- Testing: Vitest and React Testing Library; add Playwright if practical.
+- Deployment: Bolt-supported hosting or another compatible frontend host, with Supabase as the backend.
+
+Use stable, compatible package versions. Keep the architecture modular and maintainable.
+
+Do not expose service-role keys, AI provider secrets, or privileged credentials in frontend code.
+
+If a required external service is not configured, show a clear setup message and provide a working alternative where possible. Never pretend an unavailable integration is connected.
+
+---
+
+### 4. DESIGN AND BRAND IDENTITY
+
+Create a modern, minimal, premium interface.
+
+The product should feel welcoming, thoughtful, intelligent, and trustworthy—not like a complicated corporate HR portal.
+
+Design requirements:
+
+- Clear visual hierarchy and readable typography.
+- Generous but efficient spacing.
+- A restrained color palette with one distinctive accent color.
+- Clean cards, subtle borders, consistent corner radii, and restrained shadows.
+- Simple icons and helpful visual progress indicators.
+- Responsive layouts for desktop, tablet, and mobile.
+- Accessible color contrast, keyboard navigation, visible focus states, and descriptive labels.
+- Friendly, human-centered language.
+- Short instructions and progressive disclosure rather than overwhelming users with long forms.
+
+Avoid excessive gradients, unnecessary animations, giant blank spaces, decorative charts without data, and too many cards on one screen.
+
+Create a consistent brand system for the name **Skill Path**.
+
+Suggested tagline:
+
+"Discover what moves you. Find your path. Grow with purpose."
+
+Create these public pages:
+
+- Landing page.
+- How it works.
+- Explore interests.
+- Find mentors.
+- Community overview.
+- Sign in.
+- Sign up.
+- Privacy policy.
+- Terms of service.
+
+Protect all private pages behind appropriate authentication and authorization.
+
+---
+
+### 5. USER ROLES AND PERMISSIONS
+
+Support three roles:
+
+**A. Member**
+
+Can discover interests, explore recommendations, create growth plans, track progress, join communities, connect with other members, and request mentorship.
+
+**B. Expert / Mentor**
+
+Can create a professional profile, list verified or self-declared areas of expertise, specify availability, review mentorship requests, communicate with accepted connections, and manage mentoring activities.
+
+**C. Administrator**
+
+Can manage users, review reports, moderate communities, handle expert verification, investigate inappropriate content, and monitor application health.
+
+Security requirements:
+
+- Use Supabase Auth for authentication.
+- Keep authorization separate from user-editable profile fields.
+- Never allow a user to promote themselves to administrator by changing a database row or submitting a crafted API request.
+- Store privileged role assignments in protected database records or secure claims controlled by trusted server-side operations.
+- Enforce access using PostgreSQL Row Level Security (RLS).
+- Users may edit only permitted fields in their own profiles.
+- Experts must not see private assessments, conversations, or records belonging to unrelated members.
+- Administrators must use explicitly authorized server-side operations for sensitive actions.
+- Add account deletion and appropriate data-export functionality where feasible.
+
+For the first release, one account may have a member profile and separately approved expert privileges. Do not require a second account to use mentor features.
+
+---
+
+### 6. FIRST-TIME USER JOURNEY
+
+The onboarding journey is the most important part of Skill Path.
+
+Build a guided onboarding flow that feels like a conversation rather than a registration questionnaire.
+
+#### Step 1: Welcome
+
+Explain that users do not need to know their career goals before starting.
+
+Example:
+
+"You don't need to have everything figured out. Let's discover what interests you, what you enjoy doing, and what you might want to explore next."
+
+Offer:
+- Start discovering.
+- Sign in.
+- Explore how Skill Path works.
+
+#### Step 2: Understand the user
+
+Collect relevant information gradually:
+
+- Age range, optionally.
+- Current life stage: school, college, employed, career transition, or exploring.
+- Activities they naturally enjoy.
+- Topics they are curious about.
+- Activities they dislike or find draining.
+- Skills they already have or want to develop.
+- Preferred learning style.
+- Available time.
+- Goals, concerns, and current uncertainty.
+
+Avoid requesting unnecessary sensitive information.
+
+Allow users to skip questions and change answers later.
+
+#### Step 3: Interactive interest discovery
+
+Build a multi-step experience containing:
+
+- Multiple-choice questions.
+- Interest comparisons.
+- Scenario-based questions.
+- Short reflective questions.
+- Optional free-text answers.
+- Optional activity-selection exercises.
+
+Example questions:
+
+- What do you naturally choose to do when you have free time?
+- Which activities make you curious enough to keep learning?
+- Would you rather build something, solve a problem, help someone, perform, compete, or explore an idea?
+- Which topics would you like to understand better?
+- What have you enjoyed trying, even if you were not good at it yet?
+- Do you prefer working independently, with a small team, or with a community?
+
+Do not assume that liking cricket means someone should become a cricketer, or that liking computers means someone should become a software engineer.
+
+Use the answers as evidence for further exploration, not as rigid personality labels.
+
+#### Step 4: AI discovery conversation
+
+Implement a conversational AI experience that asks relevant follow-up questions based on the user's answers.
+
+The AI should:
+
+- Ask one or two meaningful questions at a time.
+- Explain why it is asking a question when helpful.
+- Avoid repeating questions already answered.
+- Identify recurring themes and tentative interests.
+- Distinguish confirmed preferences from uncertain hypotheses.
+- Ask for examples when an answer is vague.
+- Let users correct its interpretation.
+- Avoid diagnosing personality or making deterministic claims.
+- Adapt its next questions based on previous responses.
+
+The conversation should feel like a thoughtful guide, not an automated examination.
+
+#### Step 5: Interest discovery report
+
+Generate a personalized report containing:
+
+1. Main interest themes.
+2. Secondary interests.
+3. Activities the user appears to enjoy.
+4. Possible strengths, clearly marked as tentative unless demonstrated.
+5. Topics worth exploring.
+6. Questions that remain unanswered.
+7. Three suggested experiments to validate the interests.
+8. A confidence or evidence explanation for each recommendation.
+
+Use clear language such as:
+
+"Your answers suggest you may enjoy analytical and competitive activities. Let's test that through a short challenge."
+
+Never claim to know a user's true interests with certainty from a few answers.
+
+#### Step 6: Clarity checkpoint
+
+Ask the user:
+
+"How clear do you feel about what you want to explore next?"
+
+Allow them to choose:
+- I have a direction.
+- I have a few possibilities.
+- I'm still unsure.
+
+If they are unsure, continue with discovery questions and small experiments.
+
+If they have a direction, create a personalized next-step plan.
+
+Do not force users into a career recommendation.
+
+Save progress after each completed step so users can leave and resume later.
+
+---
+
+### 7. PERSONALIZED RECOMMENDATION ENGINE
+
+Build a recommendation engine that combines structured user answers, explicit feedback, activity history, and AI-generated explanations.
+
+Recommendations may include:
+
+- Hobbies and recreational interests.
+- Skills to explore.
+- Career possibilities.
+- Learning projects.
+- Communities.
+- Mentors.
+- Challenges and experiences.
+
+Each recommendation must include:
+
+- Name and category.
+- Why it may fit the user's interests.
+- Supporting answers or observed preferences.
+- What the user might enjoy about it.
+- What the user may find challenging.
+- A beginner-friendly experiment.
+- Estimated time commitment.
+- Required resources, if any.
+- Suggested next action.
+- Confidence level with a clear explanation.
+
+Do not invent labor-market statistics, credentials, salaries, expert availability, or success probabilities.
+
+Distinguish between:
+- User-provided facts.
+- Observed behavior.
+- AI-generated hypotheses.
+- Verified external information, if available.
+
+Provide feedback controls:
+
+- This interests me.
+- Maybe later.
+- Not for me.
+- I already tried this.
+- I want to understand this better.
+
+#### Adaptive rejection workflow
+
+When a user rejects a recommendation:
+
+1. Record the rejection and optional reason.
+2. Ask a brief follow-up if the reason is unclear.
+3. Determine whether the mismatch relates to the activity, difficulty, lifestyle, resources, social setting, or the user's underlying interests.
+4. Update the user's preference model using the new evidence.
+5. Offer a different recommendation, not merely a renamed version of the same idea.
+6. If uncertainty remains, offer a new discovery activity.
+7. Let the user compare alternatives and explain which feels closer.
+
+Do not treat rejection as a failure or punish users for changing their minds.
+
+Users must be able to review and correct the preference information used for recommendations.
+
+---
+
+### 8. INTEREST EXPLORATION LIBRARY
+
+Build a searchable and filterable exploration library with categories such as:
+
+- Sports and fitness.
+- Gaming and esports.
+- Art and illustration.
+- Music and performance.
+- Writing and storytelling.
+- Technology and programming.
+- Science and experimentation.
+- Business and entrepreneurship.
+- Teaching and mentoring.
+- Social impact and volunteering.
+- Nature and outdoor activities.
+- Communication and media.
+- Design and creativity.
+- Analytical thinking and research.
+- Crafts and practical skills.
+
+Each interest page should provide:
+
+- A plain-language explanation.
+- Examples of beginner activities.
+- Skills commonly developed through the activity.
+- Materials or resources needed.
+- Suggested beginner challenges.
+- Related interests.
+- Possible career connections, when relevant.
+- Relevant communities and mentors, if available.
+
+Include a beginner-friendly mode.
+
+Users should be able to explore an interest without committing to it or creating a career plan.
+
+Create real database-backed interest records. If the initial catalog uses seed data, clearly treat it as starter content and allow future expansion.
+
+---
+
+### 9. CAREER AND PERSONAL GROWTH ROADMAPS
+
+Create an action-plan builder that transforms a selected interest into a practical roadmap.
+
+Example:
+
+Interest: Cricket.
+
+Possible routes:
+- Playing and athletic development.
+- Coaching.
+- Sports analytics.
+- Sports media.
+- Sports management.
+
+For each route, explain how it relates to the user's stated preferences. Do not assume the user wants every related career.
+
+Each roadmap should include:
+
+- The user's goal.
+- Why this direction was selected.
+- Milestones.
+- Beginner tasks.
+- Skills to practice.
+- Projects or real-world experiments.
+- Learning resources.
+- Optional mentors.
+- Estimated time ranges.
+- Completion status.
+- Reflection questions.
+- Alternative routes.
+
+Provide flexible milestones such as:
+
+**Week 1:** Try a beginner activity.
+
+**Week 2:** Learn one foundational skill.
+
+**Week 3:** Complete a small project or practical challenge.
+
+**Week 4:** Reflect on enjoyment, difficulty, and whether to continue.
+
+These are illustrative defaults, not mandatory timelines. Adapt the plan to the user's availability and goals.
+
+Allow users to:
+- Create a roadmap.
+- Edit goals and milestones.
+- Mark tasks complete.
+- Pause a plan.
+- Change direction.
+- Compare alternative paths.
+- Create a new plan without losing previous progress.
+
+Do not promise that completing a roadmap guarantees employment or professional success.
+
+---
+
+### 10. ONE-TO-ONE CONNECTIONS
+
+Implement two forms of connection.
+
+#### A. Like-minded people
+
+Recommend members with shared interests, complementary goals, or similar learning activities.
+
+Show only profile information users have chosen to make visible.
+
+#### B. Experts and mentors
+
+Recommend mentors based on:
+- Relevant interests.
+- Areas of expertise.
+- User goals.
+- Preferred communication style, where available.
+- Availability and language, where available.
+
+Create these workflows:
+
+1. Browse discoverable profiles.
+2. Open a profile.
+3. View relevant interests and experience.
+4. Send a connection or mentorship request.
+5. Add a short message explaining the request.
+6. Accept or decline the request.
+7. View connection status.
+8. Communicate after the request is accepted.
+9. Disconnect or report inappropriate behavior.
+
+Implement a persistent request-status model, such as pending, accepted, declined, cancelled, or blocked.
+
+Only display availability when it has been provided and is current.
+
+Do not generate fake mentors or imply that a real person is available when no verified profile exists.
+
+If there are no matching experts, say so and offer related interests, self-guided challenges, or a waitlist option.
+
+#### Messaging and safety
+
+Implement persistent one-to-one messaging for accepted connections, using Supabase Realtime where practical.
+
+Add:
+- Conversation membership checks.
+- Message authorization.
+- Blocking.
+- Reporting.
+- Rate limiting.
+- Spam prevention.
+- Safe handling of links and user-generated content.
+
+Never expose private email addresses or other contact information without permission.
+
+For users under 18, apply age-appropriate privacy and communication safeguards, including appropriate restrictions on adult-to-minor interactions. Do not assume that a disclaimer alone is sufficient.
+
+If real-time chat or email notifications require additional setup, document the dependency and provide a working in-app alternative where possible.
+
+---
+
+### 11. INTEREST-BASED COMMUNITIES
+
+Build communities where people can explore and develop shared interests.
+
+Required features:
+
+- Browse communities by category.
+- Search and filter communities.
+- View community descriptions and rules.
+- Join and leave communities.
+- Create posts.
+- Comment on posts.
+- React to posts.
+- Save useful posts.
+- Report inappropriate content.
+- View recent activity.
+- Show joined communities on the user's dashboard.
+
+Implement role-appropriate community moderation and database permissions.
+
+Add pagination or incremental loading for larger feeds.
+
+Empty states must suggest relevant communities or interests rather than showing a blank screen.
+
+Do not display fake activity counts or simulated member interactions as real data.
+
+---
+
+### 12. INTERACTIVE CHALLENGES AND EXPERIENCES
+
+Create a challenge engine that helps users test whether an interest is genuinely enjoyable.
+
+Examples:
+
+- Sports: Analyze a short match situation or practice a beginner skill.
+- Gaming: Design a game concept or analyze a gameplay decision.
+- Art: Create a small sketch using a guided prompt.
+- Writing: Write a short story or observation.
+- Technology: Build a small interactive project.
+- Teaching: Explain a concept to a beginner.
+- Business: Develop a simple solution to a real problem.
+
+Every challenge should have:
+
+- A clear objective.
+- Estimated completion time.
+- Difficulty level.
+- Required materials.
+- Step-by-step instructions.
+- A completion or submission workflow.
+- A reflection question.
+- An option to save results privately.
+- An option to share results, subject to privacy settings.
+
+Allow users to record:
+- Enjoyment.
+- Difficulty.
+- Willingness to try again.
+- What they learned.
+- Whether they want to explore further.
+
+Use this feedback to refine recommendations, but do not automatically treat challenge completion as proof of aptitude.
+
+Provide seed challenges that work without external integrations.
+
+---
+
+### 13. AI ASSISTANT WITH CONTINUITY
+
+Build a persistent AI assistant called **Skill Path Guide**.
+
+Its role is to help users explore interests, reflect on experiences, understand recommendations, and decide what to do next.
+
+It should support requests such as:
+
+- "I don't know what I'm interested in."
+- "I enjoy cricket but don't know what else I can do with it."
+- "I rejected my last recommendations. Help me understand why."
+- "Suggest a small activity I can try this weekend."
+- "Help me decide between these two interests."
+- "Update my roadmap based on what I learned."
+- "I want to change direction."
+
+#### Memory architecture
+
+Implement application-level memory with explicit user control.
+
+Persist only relevant information such as:
+- Stated interests.
+- Preferences.
+- Rejected recommendations and reasons.
+- Completed challenges.
+- User-approved goals.
+- Roadmap progress.
+- Important reflections.
+- Open questions that may help future discovery.
+
+Use structured database records as the source of truth. Retrieve relevant context for each AI request instead of blindly sending the user's entire conversation history.
+
+Requirements:
+
+- Separate user accounts and their private data.
+- Let users view and edit their saved interest profile.
+- Let users correct inaccurate AI interpretations.
+- Let users delete selected conversation history and stored personalization data.
+- Provide a way to disable personalization or reset the interest profile.
+- Do not retain unnecessary sensitive data.
+- Do not use one user's private information to answer another user's requests.
+- Never claim the assistant remembers something unless the relevant information is actually stored and retrieved.
+
+#### AI implementation
+
+Create a server-side Edge Function that:
+1. Authenticates the user.
+2. Validates the request.
+3. Retrieves only authorized, relevant user context.
+4. Calls the configured LLM provider.
+5. Validates the response.
+6. Returns structured, useful content.
+7. Stores the appropriate conversation or feedback records.
+
+Use environment variables for API credentials.
+
+Use a structured response format for discovery summaries and recommendations. Validate the returned structure before saving it.
+
+If the AI provider is not configured, show a clear configuration message and provide a deterministic, rule-based discovery flow using stored questions and answers. Do not silently return fake AI responses.
+
+---
+
+### 14. MEMBER DASHBOARD
+
+Build a personalized home dashboard with:
+
+- Welcome message.
+- Current discovery status.
+- Main and secondary interest themes.
+- Recommended next action.
+- Saved recommendations.
+- Active roadmaps.
+- Upcoming milestones.
+- Active challenges.
+- Recent progress.
+- Connection requests.
+- Relevant communities.
+- A shortcut to continue the AI discovery conversation.
+
+Use real data from Supabase.
+
+Do not fill the dashboard with arbitrary percentages or charts that have no meaningful underlying data.
+
+Provide a simple progress overview showing:
+- Activities completed.
+- Goals currently in progress.
+- Interests explored.
+- Reflections submitted.
+- Roadmaps started or completed.
+
+Make the next recommended action the most prominent element.
+
+---
+
+### 15. EXPERT DASHBOARD
+
+Create a dedicated expert experience containing:
+
+- Expert profile editor.
+- Areas of expertise.
+- Experience and qualifications.
+- Interests and preferred mentee goals.
+- Language preferences.
+- Availability settings.
+- Incoming mentorship requests.
+- Accepted connections.
+- Authorized conversation list.
+- Mentorship activity history.
+- Profile visibility controls.
+
+Include an expert verification workflow for administrators.
+
+Clearly distinguish self-declared qualifications from verified credentials.
+
+Experts must not be able to access unrelated members' private interest assessments, AI conversations, or progress records.
+
+---
+
+### 16. ADMIN DASHBOARD
+
+Build an administrator dashboard with:
+
+- User management.
+- Expert verification queue.
+- Reported content.
+- Reported users.
+- Community moderation.
+- Interest catalog management.
+- Challenge catalog management.
+- Mentorship request oversight where appropriate.
+- Basic system status and error visibility.
+- Audit logs for sensitive administrative actions.
+
+Use secure server-side authorization for privileged actions.
+
+Record sensitive administrative changes in an audit log without unnecessarily storing private conversation contents.
+
+Do not expose secrets, authentication tokens, or private personal data in admin analytics.
+
+Include confirmation steps for destructive actions.
+
+---
+
+### 17. DATABASE SCHEMA
+
+Create Supabase migrations for a normalized, maintainable PostgreSQL schema. Use UUID primary keys, foreign keys, timestamps, appropriate indexes, constraints, and RLS policies.
+
+Create tables or equivalent well-structured records for the following entities:
+
+1. **profiles**
+   - User ID linked to `auth.users`.
+   - Display name.
+   - Avatar.
+   - Optional age range.
+   - Life stage.
+   - Bio.
+   - Language preference.
+   - Profile visibility.
+   - Onboarding status.
+   - Created and updated timestamps.
+
+2. **user_roles**
+   - User ID.
+   - Role.
+   - Approval status where applicable.
+   - Assigned-by information for privileged changes.
+   - Timestamps.
+
+3. **interests**
+   - Interest ID.
+   - Name.
+   - Slug.
+   - Category.
+   - Description.
+   - Beginner activities.
+   - Related skills.
+   - Active status.
+
+4. **user_interests**
+   - User ID.
+   - Interest ID.
+   - Interest type: primary, secondary, or exploring.
+   - User-provided preference level, where applicable.
+   - Evidence source.
+   - Confidence explanation.
+   - Last reviewed timestamp.
+
+5. **discovery_sessions**
+   - User ID.
+   - Session status.
+   - Current step.
+   - Start and completion timestamps.
+
+6. **discovery_questions**
+   - Question content.
+   - Question type.
+   - Answer options.
+   - Category.
+   - Version.
+   - Active status.
+
+7. **discovery_answers**
+   - User ID.
+   - Session ID.
+   - Question ID.
+   - Validated answer.
+   - Timestamp.
+
+8. **ai_conversations**
+   - User ID.
+   - Title.
+   - Created and updated timestamps.
+
+9. **ai_messages**
+   - Conversation ID.
+   - User ID.
+   - Role.
+   - Content.
+   - Relevant metadata.
+   - Timestamp.
+
+10. **user_memories**
+    - User ID.
+    - Memory type.
+    - Structured content.
+    - Source reference.
+    - User-confirmed status.
+    - Updated timestamp.
+
+11. **recommendations**
+    - User ID.
+    - Recommendation category.
+    - Interest or roadmap reference.
+    - Explanation.
+    - Evidence references.
+    - Confidence information.
+    - Status.
+    - Created timestamp.
+
+12. **recommendation_feedback**
+    - User ID.
+    - Recommendation ID.
+    - Feedback type.
+    - Optional rejection reason.
+    - Timestamp.
+
+13. **roadmaps**
+    - User ID.
+    - Title.
+    - Goal.
+    - Interest reference.
+    - Rationale.
+    - Status.
+    - Target date, if provided.
+    - Created and updated timestamps.
+
+14. **roadmap_milestones**
+    - Roadmap ID.
+    - Title.
+    - Description.
+    - Sequence.
+    - Status.
+    - Optional due date.
+    - Completion timestamp.
+
+15. **challenges**
+    - Title.
+    - Category.
+    - Instructions.
+    - Difficulty.
+    - Estimated duration.
+    - Materials.
+    - Reflection prompts.
+    - Active status.
+
+16. **challenge_attempts**
+    - User ID.
+    - Challenge ID.
+    - Submission or private notes.
+    - Completion status.
+    - Reflection.
+    - Feedback ratings.
+    - Timestamps.
+
+17. **expert_profiles**
+    - User ID.
+    - Expertise areas.
+    - Experience description.
+    - Qualifications.
+    - Verification status.
+    - Availability.
+    - Visibility settings.
+
+18. **connections**
+    - Requester ID.
+    - Recipient ID.
+    - Connection type.
+    - Status.
+    - Created and updated timestamps.
+
+19. **conversations**
+    - Connection reference.
+    - Conversation metadata.
+    - Timestamps.
+
+20. **messages**
+    - Conversation ID.
+    - Sender ID.
+    - Message content.
+    - Created timestamp.
+    - Read status where required.
+
+21. **communities**
+    - Name.
+    - Slug.
+    - Description.
+    - Category.
+    - Owner ID.
+    - Visibility.
+    - Moderation status.
+
+22. **community_members**
+    - Community ID.
+    - User ID.
+    - Membership role.
+    - Join timestamp.
+
+23. **community_posts**
+    - Community ID.
+    - Author ID.
+    - Content.
+    - Created and updated timestamps.
+    - Moderation status.
+
+24. **community_comments**
+    - Post ID.
+    - Author ID.
+    - Content.
+    - Created and updated timestamps.
+
+25. **community_reactions**
+    - User ID.
+    - Post or comment reference.
+    - Reaction type.
+    - Appropriate uniqueness constraints.
+
+26. **user_reports**
+    - Reporter ID.
+    - Reported entity.
+    - Reason.
+    - Status.
+    - Resolution metadata.
+
+27. **notifications**
+    - User ID.
+    - Notification type.
+    - Payload.
+    - Read status.
+    - Created timestamp.
+
+28. **audit_logs**
+    - Authorized actor ID.
+    - Action.
+    - Entity reference.
+    - Safe metadata.
+    - Timestamp.
+
+You may combine or refine tables if doing so materially improves data integrity. Document any schema changes.
+
+Avoid storing duplicated data when a relationship or foreign key is sufficient. Use appropriate cascade behavior, retention rules, and constraints.
+
+Do not store API secrets in database tables accessible to ordinary users.
+
+---
+
+### 18. ROW LEVEL SECURITY AND BACKEND SECURITY
+
+Enable RLS on all tables exposed through Supabase APIs.
+
+Write and test explicit policies.
+
+At minimum:
+
+- Users can access and update only permitted fields in their own profiles.
+- Users can read only their own private discovery answers, conversations, memories, recommendations, and progress.
+- Public profile fields are accessible only according to visibility settings.
+- Connection requests can be read or modified only by authorized participants.
+- Messages are accessible only to authorized conversation participants.
+- Community posts and comments follow community visibility and membership rules.
+- Experts can access only mentoring records and conversations they are authorized to see.
+- Administrators receive privileged access only through a secure, verifiable authorization mechanism.
+- Users cannot assign themselves privileged roles or bypass approval requirements.
+- Reports and audit logs are protected from unauthorized modification.
+- Anonymous users cannot access private user records.
+
+Also implement:
+
+- Server-side input validation.
+- Output escaping and safe rendering of user-generated content.
+- Rate limiting for AI calls, messaging, and sensitive endpoints.
+- Appropriate request-size limits.
+- Safe error messages without stack traces or secrets.
+- Authentication checks in every privileged Edge Function.
+- Secure OAuth configuration.
+- Protection against prompt injection and malicious user-generated content.
+- No execution of instructions found in user-submitted text as trusted system instructions.
+
+Never rely solely on hidden UI elements to enforce permissions.
+
+---
+
+### 19. AI COST, PRIVACY, AND RELIABILITY
+
+Design AI calls to be efficient and safe.
+
+- Limit request sizes.
+- Retrieve only relevant personalization records.
+- Avoid resending full conversation histories unnecessarily.
+- Add reasonable per-user usage limits.
+- Handle provider timeouts and rate limits.
+- Validate structured outputs.
+- Prevent repeated calls caused by accidental double submissions.
+- Avoid saving failed or malformed AI responses as valid recommendations.
+- Clearly label generated suggestions as suggestions.
+- Allow users to continue basic interest discovery without an AI API key.
+
+Use a provider abstraction so the model provider can be changed without rewriting the whole application.
+
+Document the chosen provider, environment variables, model configuration, and any associated costs or limits.
+
+---
+
+### 20. SEARCH, FILTERING, AND NAVIGATION
+
+Provide consistent navigation with sections such as:
+
+- Home.
+- Discover.
+- Explore.
+- My Path.
+- Connections.
+- Communities.
+- Progress.
+- Profile.
+
+For experts, provide relevant mentor tools.
+
+For administrators, provide the admin dashboard only when authorized.
+
+Add functional search and filters for:
+- Interests.
+- Challenges.
+- Communities.
+- Discoverable members.
+- Experts.
+- Recommendations.
+
+Use actual database queries with appropriate filtering, pagination, and empty states.
+
+Keep navigation consistent across mobile and desktop.
+
+---
+
+### 21. LOADING, EMPTY, ERROR, AND SUCCESS STATES
+
+Every important interaction must provide feedback.
+
+Implement:
+- Loading skeletons or progress indicators.
+- Disabled submit buttons while requests are in progress.
+- Inline form validation.
+- Clear error messages.
+- Retry options for recoverable failures.
+- Success confirmations.
+- Empty states with helpful next actions.
+- Session-expiration handling.
+- Network failure handling.
+- AI provider unavailable states.
+- Permission-denied states.
+- Duplicate submission protection.
+
+Do not leave users staring at an infinite spinner.
+
+Never display a success message before the operation has actually succeeded.
+
+---
+
+### 22. ACCESSIBILITY AND RESPONSIVENESS
+
+Ensure that:
+
+- The application works on mobile, tablet, and desktop.
+- Forms can be completed using a keyboard.
+- Buttons and inputs have accessible names.
+- Focus indicators are visible.
+- Dialogs and menus are keyboard accessible.
+- Color is not the only way to communicate status.
+- Text remains readable at common zoom levels.
+- Reduced-motion preferences are respected.
+
+Test key screens at mobile and desktop widths.
+
+---
+
+### 23. TESTING REQUIREMENTS
+
+Write automated tests for critical application behavior.
+
+#### Authentication
+- Sign up.
+- Sign in.
+- Invalid credentials.
+- Sign out.
+- Protected routes.
+- Google OAuth configuration and callback handling.
+
+#### Interest discovery
+- Complete a discovery session.
+- Resume an incomplete session.
+- Save answers.
+- Generate a report.
+- Correct an incorrect interpretation.
+- Reject a recommendation.
+- Generate an alternative based on feedback.
+
+#### Roadmaps and challenges
+- Create a roadmap.
+- Update milestones.
+- Persist progress after refresh.
+- Start and complete a challenge.
+- Save reflections.
+
+#### Connections
+- Send a request.
+- Accept or reject a request.
+- Prevent unauthorized access to conversations.
+- Block or report a user.
+
+#### Communities
+- Join and leave a community.
+- Create posts and comments.
+- Enforce community permissions.
+- Report inappropriate content.
+
+#### Security
+- Verify RLS isolation between two different users.
+- Verify that ordinary users cannot assign themselves privileged roles.
+- Verify that unrelated users cannot read private messages or discovery records.
+- Verify that unauthorized Edge Function calls are rejected.
+
+#### Interface
+- Test empty states.
+- Test API failures.
+- Test responsive navigation.
+- Test form validation.
+- Test retry and loading states.
+
+Do not claim a test has passed unless it has actually been executed.
+
+---
+
+### 24. IMPLEMENTATION PHASES
+
+Implement in the following order.
+
+**Phase 1 — Foundation**
+- Create the project.
+- Build the design system.
+- Configure routing.
+- Connect Supabase.
+- Add database migrations.
+- Implement authentication and roles.
+- Implement core RLS policies.
+- Build responsive navigation.
+
+**Phase 2 — Core discovery**
+- Build onboarding.
+- Implement interactive questions.
+- Persist discovery sessions and answers.
+- Create a rule-based discovery flow.
+- Add AI discovery through a secure Edge Function.
+- Build the interest report and clarity checkpoint.
+
+**Phase 3 — Personalized growth**
+- Implement recommendation generation.
+- Add rejection feedback and adaptive alternatives.
+- Build the interest exploration library.
+- Create roadmaps and milestones.
+- Add challenges and reflections.
+- Implement progress tracking.
+
+**Phase 4 — Human connections**
+- Build member and expert profiles.
+- Implement connection requests.
+- Add mentorship workflows.
+- Implement secure messaging.
+- Add communities and moderation.
+
+**Phase 5 — Operations**
+- Build expert dashboard.
+- Build admin dashboard.
+- Add reports and notifications.
+- Add usage limits and audit logging.
+- Complete security and accessibility checks.
+
+**Phase 6 — Verification and deployment**
+- Run database migrations.
+- Run automated tests.
+- Fix build errors and runtime errors.
+- Test key user journeys.
+- Verify RLS behavior.
+- Configure production environment variables.
+- Prepare deployment instructions.
+- Document known limitations.
+
+If time or platform limits prevent all phases from being completed, finish a working Phase 1 and Phase 2 before attempting advanced features. Clearly label unfinished modules and never represent them as complete.
+
+---
+
+### 25. REQUIRED SEED DATA
+
+Provide a small, useful starter catalog of interests and beginner challenges covering multiple categories.
+
+Include sample interests such as cricket, fitness, gaming, drawing, music, writing, programming, data analysis, teaching, entrepreneurship, and volunteering.
+
+Add realistic beginner challenges with clear instructions.
+
+Seed public interest and challenge content through migrations or a safe seeding process.
+
+Do not create fake real-world mentors, fake testimonials, fake messages, or invented user activity.
+
+If demo accounts are required, document how to create them safely in a local or staging environment.
+
+---
+
+### 26. DEFINITION OF DONE
+
+The application is not complete merely because it builds or looks good.
+
+Before declaring completion, verify that:
+
+1. A new user can register and sign in.
+2. Google sign-in works when configured, or has a clearly documented configuration requirement.
+3. The user can complete and resume interest discovery.
+4. Answers persist after refreshing or signing in again.
+5. The discovery report uses the user's actual answers.
+6. The user can reject recommendations and receive a meaningfully different alternative.
+7. The user can explore interests without selecting a career.
+8. The user can create a roadmap and update its milestones.
+9. The user can complete challenges and record reflections.
+10. The user can track genuine progress.
+11. The user can send and receive authorized connection requests.
+12. Mentorship features respect profile visibility and permissions.
+13. Communities support actual membership and interactions.
+14. The AI assistant retrieves only authorized personalization data.
+15. The expert dashboard enforces expert permissions.
+16. The admin dashboard enforces administrator permissions.
+17. RLS policies prevent cross-user private data access.
+18. Loading, empty, error, and success states are implemented.
+19. The application works on mobile and desktop.
+20. Setup and deployment instructions are complete.
+
+Any feature blocked by missing external credentials must be clearly identified, with exact configuration instructions.
+
+---
+
+### 27. REQUIRED DELIVERABLES
+
+At the end of implementation, provide:
+
+1. The working application.
+2. The complete source code.
+3. A summary of the implemented features.
+4. The Supabase database migrations.
+5. The RLS policies and security configuration.
+6. The Edge Functions and AI integration.
+7. The `.env.example` file containing placeholder variable names only.
+8. Instructions for setting up Supabase.
+9. Instructions for configuring Google OAuth.
+10. Instructions for configuring the AI provider.
+11. Instructions for running locally.
+12. Instructions for deployment.
+13. A list of tests actually executed and their results.
+14. A list of remaining limitations and unconfigured integrations.
+15. A short guide explaining how to use the platform as a member, expert, and administrator.
+
+Do not include real secrets in source code or documentation.
+
+---
+
+### 28. FINAL PRODUCT PRINCIPLE
+
+Throughout development, keep returning to this question:
+
+**"Will this feature help a person understand themselves better, explore an interest, connect with the right people, or decide what to do next?"**
+
+If a feature does not contribute meaningfully to that goal, simplify it or postpone it.
+
+Skill Path should not pressure people to choose a career prematurely. It should help them discover, experiment, reflect, and grow.
+
+The final experience should leave a user thinking:
+
+"I may not know my entire future yet, but I understand myself better, I have discovered something worth exploring, and I know what I can do next."
+
+Build Skill Path to deliver that experience through a secure, usable, maintainable, and genuinely functional application.

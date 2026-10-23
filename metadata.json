@@ -1,0 +1,6 @@
+{
+  "name": "Skill Path",
+  "description": "Discover what moves you. Find your path. Grow with purpose. AI-powered interest discovery, actionable roadmaps, mentor connections, and communities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

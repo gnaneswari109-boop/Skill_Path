@@ -3,6 +3,7 @@ import { store } from './services/store';
 import { ThemeProvider } from './context/ThemeContext';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import { SupabaseModal } from './components/SupabaseModal';
 import { MemoryModal } from './components/MemoryModal';
 import { AIGuideDrawer } from './components/AIGuideDrawer';
@@ -192,92 +193,12 @@ export default function App() {
             )}
           </main>
 
-          {/* Skill Path Redesigned Global Footer */}
-          <footer className="border-t border-zinc-200/80 dark:border-[#292D32]/80 bg-white dark:bg-[#111315] py-10 px-4 sm:px-6 lg:px-8 mt-auto transition-colors">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-              <div className="space-y-2">
-                <SkillPathLogo size="sm" showTagline={true} />
-                <p className="text-xs text-zinc-500 dark:text-[#858D98] max-w-sm leading-relaxed">
-                  Discover what moves you without premature pressure. Structured micro-experiments, 4-week roadmaps, and verified practitioner mentorship.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-xs">
-                <div className="space-y-2">
-                  <div className="font-semibold text-zinc-950 dark:text-white uppercase tracking-wider text-[11px]">Explore</div>
-                  <ul className="space-y-1.5 text-zinc-600 dark:text-[#B8BEC7]">
-                    <li>
-                      <button onClick={() => setCurrentTab('discovery')} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        Discovery Matrix
-                      </button>
-                    </li>
-                    <li>
-                      <button onClick={() => setCurrentTab('explore')} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        Interest Catalog
-                      </button>
-                    </li>
-                    <li>
-                      <button onClick={() => setCurrentTab('challenges')} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        Micro-Challenges
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="font-semibold text-zinc-950 dark:text-white uppercase tracking-wider text-[11px]">Growth</div>
-                  <ul className="space-y-1.5 text-zinc-600 dark:text-[#B8BEC7]">
-                    <li>
-                      <button onClick={() => setCurrentTab('roadmaps')} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        4-Week Roadmaps
-                      </button>
-                    </li>
-                    <li>
-                      <button onClick={() => setCurrentTab('mentors')} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        Verified Mentors
-                      </button>
-                    </li>
-                    <li>
-                      <button onClick={() => setCurrentTab('communities')} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        Guild Communities
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="font-semibold text-zinc-950 dark:text-white uppercase tracking-wider text-[11px]">Platform</div>
-                  <ul className="space-y-1.5 text-zinc-600 dark:text-[#B8BEC7]">
-                    <li>
-                      <button onClick={() => setSupabaseModalOpen(true)} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        PostgreSQL (28 Tables)
-                      </button>
-                    </li>
-                    <li>
-                      <button onClick={() => setMemoryModalOpen(true)} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        AI Memory Inspector
-                      </button>
-                    </li>
-                    <li>
-                      <button onClick={() => setCurrentTab('privacy')} className="hover:text-[#FF6B00] transition-colors cursor-pointer">
-                        Privacy Policy
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto pt-6 mt-6 border-t border-zinc-100 dark:border-[#292D32] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-400 dark:text-[#858D98]">
-              <div>
-                © 2026 Skill Path Inc. Discover. Learn. Grow. All rights reserved.
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#FF6B00] inline-block animate-pulse" />
-                <span className="text-zinc-600 dark:text-[#B8BEC7] font-mono">Row Level Security Active · 28 Entities Synced</span>
-              </div>
-            </div>
-          </footer>
+          {/* Skill Path Global Footer */}
+          <Footer
+            onSelectTab={(tab) => setCurrentTab(tab)}
+            onOpenSupabaseModal={() => setSupabaseModalOpen(true)}
+            onOpenMemoryModal={() => setMemoryModalOpen(true)}
+          />
 
           {/* Global Modals & Drawers */}
           <SupabaseModal

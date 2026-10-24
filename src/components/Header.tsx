@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { store } from '../services/store';
+import { SkillPathLogo } from './SkillPathLogo';
 
 interface HeaderProps {
   currentTab: string;
@@ -93,7 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-30 h-16 bg-white/90 dark:bg-[#111315]/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-[#292D32]/80 transition-colors">
       <div className="h-full px-4 sm:px-6 flex items-center justify-between gap-4">
-        {/* Left Side: Mobile toggle + Breadcrumb / Page Title (no SkillPath logo beside menu) */}
+        {/* Left Side: Mobile toggle + Skill Path abstract icon (no text label) + Breadcrumb / Title */}
         <div className="flex items-center gap-3">
           <button
             onClick={onOpenMobileMenu}
@@ -103,6 +104,18 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Menu className="w-5 h-5" />
           </button>
+
+          {/* Skill Path Abstract Icon Only (No text label) */}
+          <button
+            onClick={() => onSelectTab('dashboard')}
+            className="flex items-center justify-center p-1 rounded-xl hover:bg-zinc-100 dark:hover:bg-[#1B1F23] transition-colors cursor-pointer group shrink-0 focus:outline-hidden"
+            title="Skill Path Home"
+            aria-label="Skill Path Home"
+          >
+            <SkillPathLogo size="sm" showWordmark={false} showTagline={false} />
+          </button>
+
+          <div className="h-5 w-px bg-zinc-200 dark:bg-[#292D32] hidden sm:block" />
 
           {/* Breadcrumb / Title */}
           <div>

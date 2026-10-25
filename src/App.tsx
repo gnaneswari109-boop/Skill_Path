@@ -173,7 +173,10 @@ export default function App() {
             {currentTab === 'admin_console' && <AdminDashboardView />}
 
             {currentTab === 'profile' && (
-              <ProfileView onOpenMemoryModal={() => setMemoryModalOpen(true)} />
+              <ProfileView
+                onOpenMemoryModal={() => setMemoryModalOpen(true)}
+                onNavigateToRoadmap={() => setCurrentTab('roadmaps')}
+              />
             )}
 
             {currentTab === 'privacy' && (

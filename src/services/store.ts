@@ -150,72 +150,163 @@ export class SkillPathStore {
   private getInitialRoadmaps(): Roadmap[] {
     return [
       {
-        id: 'road_1',
-        userId: 'user_member_1',
-        title: 'Sports Analytics Foundation & Tactical Modeling',
-        goal: 'Produce a 5-match tactical insights portfolio and present to a mentor',
-        interestSlug: 'sports-analytics',
-        interestName: 'Sports Analytics & Tactical Modeling',
-        category: 'Sports & Fitness',
-        rationale: 'Created from your verified curiosity in game strategy, pattern recognition, and hands-on data storytelling.',
+        id: 'road_ananya_1',
+        userId: 'user_member_ananya',
+        title: 'AI & Machine Learning Engineering Foundation',
+        goal: 'Train and validate an explainable student performance model and deploy interactive inference',
+        interestSlug: 'ai-ml-engineering',
+        interestName: 'Artificial Intelligence & Machine Learning',
+        category: 'Technology & AI',
+        rationale: 'Created from your verified focus on responsible predictive algorithms, SHAP explanations, and healthcare datasets.',
         status: 'active',
         targetWeeks: 4,
         createdAt: '2026-10-18T10:00:00Z',
         updatedAt: '2026-10-21T18:00:00Z',
         milestones: [
           {
-            id: 'm1',
+            id: 'an_m1',
             weekNumber: 1,
-            title: 'Foundational Observation & Manual Tracking',
-            description: 'Experience game deconstruction by manually recording events during a live match without software.',
-            focusArea: 'Observation Skills',
+            title: 'Exploratory Analysis & Vectorized NumPy Pipelines',
+            description: 'Inspect distributions, handle missing values, and scale tabular arrays with zero for-loops.',
+            focusArea: 'Data Engineering',
             completed: true,
-            reflectionQuestion: 'Did recording manual data make you feel more engaged in the match?',
-            userReflection: 'Yes, I noticed subtle shifts in bowler field placements that I previously took for granted.',
+            reflectionQuestion: 'Did memory-contiguous vectorization make array manipulation more intuitive?',
+            userReflection: 'Yes, thinking in array tensors instead of for-loops made feature engineering 10x cleaner.',
             tasks: [
-              { id: 't1_1', title: 'Pick 1 match and choose 3 specific variables to record', completed: true },
-              { id: 't1_2', title: 'Complete the 45-minute Match Momentum Breakdown challenge', completed: true },
-              { id: 't1_3', title: 'Compare your notes with the post-match summary', completed: true }
+              { id: 'an_t1_1', title: 'Import student performance dataset and verify array shapes', completed: true },
+              { id: 'an_t1_2', title: 'Write vectorized min-max normalization function', completed: true },
+              { id: 'an_t1_3', title: 'Compute correlation matrix between attendance and test scores', completed: true }
             ]
           },
           {
-            id: 'm2',
+            id: 'an_m2',
             weekNumber: 2,
-            title: 'Lightweight Spreadsheets & Pattern Visuals',
-            description: 'Turn your handwritten match tally into a clean Google Sheet with 2 clear comparison charts.',
-            focusArea: 'Basic Data Modeling',
-            completed: false,
-            reflectionQuestion: 'What unexpected correlation emerged once you visualized the data?',
+            title: 'Model Training, Regularization & Bias-Variance Diagnosis',
+            description: 'Train Ridge, Lasso, and Decision Trees, tuning hyperparameters via 5-fold cross-validation.',
+            focusArea: 'Predictive Modeling',
+            completed: true,
+            reflectionQuestion: 'How did regularizing weights prevent the model from overfitting test partitions?',
+            userReflection: 'L2 Ridge kept coefficients under control when collinear features appeared.',
             tasks: [
-              { id: 't2_1', title: 'Import a free open dataset from cricsheet or StatsBomb', completed: true },
-              { id: 't2_2', title: 'Calculate run rate variance and dot ball percentage', completed: false },
-              { id: 't2_3', title: 'Create a clean 2-axis chart highlighting pivotal moments', completed: false }
+              { id: 'an_t2_1', title: 'Plot learning curves comparing training vs test error', completed: true },
+              { id: 'an_t2_2', title: 'Tune alpha regularization hyperparameter with logspace grid', completed: true },
+              { id: 'an_t2_3', title: 'Evaluate confusion matrix and compute precision/recall', completed: true }
             ]
           },
           {
-            id: 'm3',
+            id: 'an_m3',
             weekNumber: 3,
-            title: 'Narrative Translation & The 1-Page Brief',
-            description: 'Translate numbers into human language that a non-technical coach or peer can instantly grasp.',
-            focusArea: 'Data Storytelling',
+            title: 'TreeSHAP Interpretability & Feature Attribution',
+            description: 'Explain why individual students received at-risk predictions using SHAP waterfall graphs.',
+            focusArea: 'Explainable AI',
             completed: false,
-            reflectionQuestion: 'Could a teammate understand your recommendation in under 30 seconds?',
+            reflectionQuestion: 'Could a guidance counselor understand your SHAP feature impact cards?',
+            userReflection: '',
             tasks: [
-              { id: 't3_1', title: 'Write a 3-bullet match tactical takeaway', completed: false },
-              { id: 't3_2', title: 'Draft an informal post in the Sports Analytics Guild community', completed: false }
+              { id: 'an_t3_1', title: 'Calculate Shapley values across 500 validation records', completed: false },
+              { id: 'an_t3_2', title: 'Generate beeswarm plot of top 5 predictive factors', completed: false }
             ]
           },
           {
-            id: 'm4',
+            id: 'an_m4',
             weekNumber: 4,
-            title: 'Mentor Review & Path Reflection',
-            description: 'Share your 1-page visual brief with Dr. Aris Thorne and decide your next learning step.',
-            focusArea: 'Human Connection & Next Step',
+            title: 'Deployment & Advisor UI Prototype',
+            description: 'Wrap inference pipeline in Streamlit and present research artifact to mentor.',
+            focusArea: 'Interactive Delivery',
             completed: false,
-            reflectionQuestion: 'Do you want to continue this interest as a weekly hobby or explore professional certifications?',
+            reflectionQuestion: 'What feedback did the mentor give on deployment latency?',
+            userReflection: '',
             tasks: [
-              { id: 't4_1', title: 'Send your brief in a direct message to Dr. Aris Thorne', completed: false },
-              { id: 't4_2', title: 'Complete the Clarity Checkpoint reflection', completed: false }
+              { id: 'an_t4_1', title: 'Build interactive student score slider UI in Streamlit', completed: false },
+              { id: 'an_t4_2', title: 'Host demo walkthrough session with Dr. Aris Thorne', completed: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'road_rahul_1',
+        userId: 'user_member_rahul',
+        title: 'Full-Stack REST Architecture with React & Node.js',
+        goal: 'Architect and deploy resilient Campus Connect community platform with MongoDB and WebSockets',
+        interestSlug: 'fullstack-web',
+        interestName: 'Full-Stack Web Development',
+        category: 'Software Engineering',
+        rationale: 'Created from your passion for clean React 19 component design and low-latency Express backends.',
+        status: 'active',
+        targetWeeks: 4,
+        createdAt: '2026-10-15T10:00:00Z',
+        updatedAt: '2026-10-20T18:00:00Z',
+        milestones: [
+          {
+            id: 'rh_m1',
+            weekNumber: 1,
+            title: 'Component Primitives & Reusable Custom Hooks',
+            description: 'Build accessible UI components in Tailwind and abstract data fetching into custom hooks.',
+            focusArea: 'Frontend Architecture',
+            completed: true,
+            reflectionQuestion: 'How did custom hooks simplify state management across multiple views?',
+            userReflection: 'Reduced boilerplate in 4 separate club feed views dramatically.',
+            tasks: [
+              { id: 'rh_t1_1', title: 'Create useLocalStorage and useFetch custom hooks', completed: true },
+              { id: 'rh_t1_2', title: 'Implement accessible keyboard navigation for tabs and cards', completed: true }
+            ]
+          },
+          {
+            id: 'rh_m2',
+            weekNumber: 2,
+            title: 'Express Middleware & Security Hardening',
+            description: 'Implement JWT cookies, rate limiting, and centralized error middleware.',
+            focusArea: 'Backend Engineering',
+            completed: false,
+            reflectionQuestion: 'What unexpected edge case did your centralized error handler catch?',
+            userReflection: '',
+            tasks: [
+              { id: 'rh_t2_1', title: 'Configure helmet and cors middleware on Express server', completed: true },
+              { id: 'rh_t2_2', title: 'Write input validation middleware with regex checks', completed: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'road_priya_1',
+        userId: 'user_member_priya',
+        title: 'Executive Placement Insights & Business Intelligence',
+        goal: 'Build an interactive 4-page Power BI executive dashboard with DAX measures and SQL pipelines',
+        interestSlug: 'business-intelligence',
+        interestName: 'Data Analytics & Business Intelligence',
+        category: 'Analytics & Strategy',
+        rationale: 'Created from your goal to bridge university placement cell data with interactive visualizations.',
+        status: 'active',
+        targetWeeks: 4,
+        createdAt: '2026-10-16T10:00:00Z',
+        updatedAt: '2026-10-22T18:00:00Z',
+        milestones: [
+          {
+            id: 'pr_m1',
+            weekNumber: 1,
+            title: 'Data Wrangling in Pandas & Distribution Checks',
+            description: 'Clean unstructured campus records, inspect outliers, and calculate median salaries by branch.',
+            focusArea: 'Data Cleaning',
+            completed: true,
+            reflectionQuestion: 'Why was median package more informative than average package for campus offers?',
+            userReflection: 'A few extreme 45 LPA international offers skewed the mean upwards by 40%.',
+            tasks: [
+              { id: 'pr_t1_1', title: 'Clean salary currency characters and parse integers', completed: true },
+              { id: 'pr_t1_2', title: 'Calculate IQR outlier cutoffs for offer packages', completed: true }
+            ]
+          },
+          {
+            id: 'pr_m2',
+            weekNumber: 2,
+            title: 'Star Schema & DAX Key Performance Measures',
+            description: 'Design FactPlacements and DimStudent relationships with DIVIDE zero guards.',
+            focusArea: 'Power BI Modeling',
+            completed: false,
+            reflectionQuestion: 'How did creating a dedicated Date table simplify YoY growth formulas?',
+            userReflection: '',
+            tasks: [
+              { id: 'pr_t2_1', title: 'Model 1-to-many relationships in Power BI relationship view', completed: true },
+              { id: 'pr_t2_2', title: 'Write YoY Placement Growth DAX measure with SAMEPERIODLASTYEAR', completed: false }
             ]
           }
         ]
